@@ -694,3 +694,13 @@ body:not(.home) .main a:not(.post-card-title a):not([href^="/tags/"]):not([href^
   color: #ffa87c !important;
   text-decoration: none !important;
 }
+
+/* ========== 强制浅色模式 ========== */
+:root {
+  color-scheme: light !important;
+}
+
+html {
+  --body-background: #fff !important;
+  --body-text-color: #333 !important;
+}

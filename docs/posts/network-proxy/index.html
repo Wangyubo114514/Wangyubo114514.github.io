@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap">
 
 
-<link rel="stylesheet" href="/scss/style.min.69baa55b6411bdf5170686561fe84c31e9d5e7da132c5b884a9a915328c70828.css"><meta property='og:title' content="让访问GitHub更流畅">
+<link rel="stylesheet" href="/scss/style.min.5ee0291f1c1c34154aad73470f4aeacafa8805b1b3a87a517305b7f22ea75a5e.css"><meta property='og:title' content="让访问GitHub更流畅">
 <meta property='og:description' content="比改 hosts 更省心：dev-sidecar 让 GitHub 真正“直连” 用 GitHub 最烦的，不是一直打不开，而是时好时坏。网页转圈，头像裂图，clone 半天没动静——这种“薛定谔的通”，很多时候真不是墙的问题，而是本地 DNS 解析出来的 IP，在当前线路上走不通。\n改 hosts 当然能救急，我也用过。但它的问题很明显：IP 会失效，失效了要手动换，换完还得清 DNS 缓存。说到底，hosts 就是手动钉一个 IP，钉对了算运气，钉错了再来一遍。\n最近我在用 dev-sidecar，思路和 hosts 不是一回事，记一下。\n它的逻辑 dev-sidecar 可以理解成一个本地代理。名字里的 sidecar 来自 service-mesh，就是给开发者打辅助的“边车”。\n在本机起一个代理服务 系统代理指向它 拦截 github.com 这些域名的 HTTPS 请求 靠 DNS 优选和 SNI 修改，把请求代理到国内加速通道，或者直连 GitHub 官方 IP 你不用自己改 IP，它会选。\n检测机制 这块我觉得做得比较实在。\n启动后它会先做 DNS 优选，把域名下能用的 IP 解析出来，测速，然后挑最快的。GitHub 直连加速则是改 SNI 字段，思路参考了 FastGithub。\n请求拦截也不止一条路。它可以配多个镜像站做备份，带测速；访问失败或超时，就自动切到备用站点。一条路不通，它会换另一条。\n怎么用 下载安装\n去官方仓库的 Releases 页面下。Windows 选文件带 2.3.0-windows-x86_64.exe的那个文件 安装时 Windows 可能弹“未知发行者”，选保留就行。\n">
 <meta property='og:url' content='https://starter.stack.cai.im/posts/network-proxy/'>
 <meta property='og:site_name' content='WIN-VSCODE的小站'>
@@ -29,7 +29,7 @@
         (function() {
             const colorSchemeKey = 'StackColorScheme';
             if(!localStorage.getItem(colorSchemeKey)){
-                localStorage.setItem(colorSchemeKey, "auto");
+                localStorage.setItem(colorSchemeKey, "light");
             }
         })();
     </script><script>

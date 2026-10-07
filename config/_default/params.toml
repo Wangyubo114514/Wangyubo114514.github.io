@@ -57,7 +57,7 @@ page = [
 # ---------- 颜色方案 ----------
 [colorScheme]
 toggle = true
-default = "auto"
+default = "light"
 
 # ---------- 评论系统 ----------
 [comments]

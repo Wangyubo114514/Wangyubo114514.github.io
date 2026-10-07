@@ -1,0 +1,8 @@
+[zh]
+label = "简体中文"
+title = "Wangyubo114514"
+copyright = "Wangyubo114514"     # 强制覆盖页脚版权
+weight = 2
+
+[zh.params.sidebar]
+subtitle = "摸得浮生半日闲"     # 侧边栏签名

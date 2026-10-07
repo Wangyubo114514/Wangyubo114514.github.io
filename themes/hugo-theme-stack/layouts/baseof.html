@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Locale }}" dir="{{ default `ltr` .Language.Direction }}">
+    <head>
+        {{- partial "head/head.html" . -}}
+        {{- block "head" . -}}{{ end }}
+    </head>
+    <body class="{{ block `body-class` . }}{{ end }}">
+        {{- partial "head/colorScheme" . -}}
+
+        <!-- ===== 顶部导航栏 ===== -->
+        <header class="top-navbar">
+            <div class="top-navbar-inner">
+                <div class="navbar-left">
+                  <a href="{{ .Site.BaseURL }}" class="navbar-brand">WIN-VSCODE的小站</a>
+                </div>
+
+                <nav class="navbar-menu">
+                    {{ range .Site.Menus.main }}
+                      {{ if eq .URL "/categories/" }}
+                        <div class="navbar-dropdown">
+                          <a href="{{ .URL | relURL }}" class="navbar-link">{{ .Name }}</a>
+                          <div class="dropdown-menu">
+                            {{ range $name, $taxonomy := site.Taxonomies.categories }}
+                              <a href="{{ $taxonomy.Page.RelPermalink }}" class="dropdown-item">📂 {{ $name }}</a>
+                            {{ end }}
+                          </div>
+                        </div>
+                      {{ else if eq .URL "/tags/" }}
+                        <div class="navbar-dropdown">
+                          <a href="{{ .URL | relURL }}" class="navbar-link">{{ .Name }}</a>
+                          <div class="dropdown-menu">
+                            {{ range $name, $taxonomy := site.Taxonomies.tags }}
+                              <a href="{{ $taxonomy.Page.RelPermalink }}" class="dropdown-item">🏷️ {{ $name }}</a>
+                            {{ end }}
+                          </div>
+                        </div>
+                      {{ else }}
+                        <a href="{{ .URL | relURL }}" class="navbar-link">{{ .Name }}</a>
+                      {{ end }}
+                    {{ end }}
+                    <form class="navbar-search" onsubmit="event.preventDefault(); var q=this.querySelector('input').value.trim(); if(q) window.open('/search/?q=' + encodeURIComponent(q), '_blank');">
+                      <input type="text" placeholder="搜索..." autocomplete="off">
+                    </form>
+                </nav>
+            </div>
+        </header>
+
+        {{ if .IsHome }}
+          {{- block "main" . }}{{- end }}
+        {{ else }}
+          <div class="container main-container flex on-phone--column compact">
+              <main class="main">
+                  {{- block "main" . }}{{- end }}
+              </main>
+              {{ if not .Params.hideSidebar }}
+              <aside class="right-sidebar">
+                  {{ partial "right-sidebar.html" . }}
+              </aside>
+              {{ end }}
+          </div>
+        {{ end }}
+
+        {{ partial "footer/include.html" . }}
+
+        <!-- 导航栏滚动隐藏 -->
+        <script>
+          (function() {
+            var navbar = document.querySelector('.top-navbar');
+            if (!navbar) return;
+            var lastScrollY = window.scrollY;
+            function handleScroll() {
+              var currentScrollY = window.scrollY;
+              if (currentScrollY > 60 && currentScrollY > lastScrollY) {
+                navbar.classList.add('hidden');
+              } else {
+                navbar.classList.remove('hidden');
+              }
+              lastScrollY = currentScrollY;
+            }
+            window.addEventListener('scroll', handleScroll, { passive: true });
+          })();
+        </script>
+
+        <!-- 标签/分类胶囊一标签一色 -->
+        <script>
+          (function() {
+            var palette = [
+              '#ac4142','#7e8e50','#5e7ec9','#4caf50','#9c27b0',
+              '#6c6c8c','#d4a017','#5c6bc0','#c2185b','#2e8b57',
+              '#7a7c50','#6d4c41','#e91e63'
+            ];
+            var links = document.querySelectorAll(
+              '.main a[href^="/tags/"], .main a[href^="/categories/"]'
+            );
+            links.forEach(function(el, i) {
+              if (el.classList.contains('dropdown-item') ||
+                  el.classList.contains('navbar-link')) return;
+              el.style.setProperty('background', palette[i % palette.length], 'important');
+              el.style.setProperty('color', '#fff', 'important');
+            });
+          })();
+        </script>
+
+        <!-- 隐藏文章底部的 "Related content" -->
+        <script>
+          (function() {
+            document.querySelectorAll('h2.section-title').forEach(function(el) {
+              if (el.textContent.trim().toLowerCase() === 'related content') {
+                var parent = el.closest('section') || el.parentElement;
+                if (parent) parent.style.display = 'none';
+              }
+            });
+          })();
+        </script>
+    </body>
+</html>

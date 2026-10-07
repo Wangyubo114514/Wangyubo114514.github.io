@@ -1,0 +1,161 @@
+<!-- ===== 个人名片 ===== -->
+<div class="sidebar-card card-info">
+  <div class="card-info-avatar">
+    <img src="/img/avatar.png" alt="avatar">
+  </div>
+  <div class="card-info-name">WIN-VSCODE</div>
+  <div class="card-info-desc">2015年小学生，用Python看世界</div>
+  <div class="card-info-stats">
+    <a href="/archives/">
+      <div class="stat-label">文章</div>
+      <div class="stat-num">{{ len (where .Site.RegularPages "Section" "posts") }}</div>
+    </a>
+    <a href="/tags/">
+      <div class="stat-label">标签</div>
+      <div class="stat-num">{{ len .Site.Taxonomies.tags }}</div>
+    </a>
+    <a href="/categories/">
+      <div class="stat-label">分类</div>
+      <div class="stat-num">{{ len .Site.Taxonomies.categories }}</div>
+    </a>
+  </div>
+  <a class="card-info-follow" href="https://github.com/Wangyubo114514" target="_blank">
+    <i class="fa-brands fa-github"></i> 关注我
+  </a>
+  <div class="card-info-social">
+    <a href="https://github.com/Wangyubo114514" target="_blank" title="GitHub">🐱</a>
+    <a href="https://space.bilibili.com/3546631809010428" target="_blank" title="Bilibili">📺</a>
+  </div>
+</div>
+
+<!-- ===== 公告 ===== -->
+<div class="sidebar-card card-announcement">
+  <div class="card-title"><span>📢 公告</span></div>
+  <div class="card-content">This is my Blog</div>
+</div>
+
+<!-- ===== 最新文章 ===== -->
+<div class="sidebar-card card-recent">
+  <div class="card-title"><span>🕐 最新文章</span></div>
+  <ul class="recent-list">
+    {{ range first 5 (where .Site.RegularPages "Section" "posts") }}
+    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+    {{ end }}
+  </ul>
+</div>
+
+<!-- ===== 时钟 ===== -->
+<div class="sidebar-card card-clock">
+  <div class="clock-row">
+    <span id="clock-date">----</span>
+    <span id="clock-weather">🌤 -- ℃</span>
+  </div>
+  <div class="clock-time" id="clock-time">--:--:--</div>
+  <div class="clock-row">
+    <span>📍 安徽·黄山</span>
+    <span id="clock-ampm">--</span>
+  </div>
+</div>
+
+<!-- ===== 每日一言 ===== -->
+<div class="sidebar-card card-hitokoto">
+  <div class="hitokoto-title">❝ 每日一言</div>
+  <div class="hitokoto-text" id="hitokoto-text">加载中...</div>
+  <div class="hitokoto-footer">
+    <span id="hitokoto-from">— </span>
+    <span class="hitokoto-refresh" onclick="loadHitokoto()">🔄 换一句</span>
+  </div>
+</div>
+
+<!-- ===== 文章页：显示目录 ===== -->
+{{ if and .IsPage .TableOfContents }}
+<div class="sidebar-card card-toc">
+  <div class="card-title"><span>📑 目录</span></div>
+  <div class="toc-content">{{ .TableOfContents }}</div>
+</div>
+{{ end }}
+
+<!-- ===== 非文章页：分类 → 标签 → 归档 ===== -->
+{{ if not .IsPage }}
+
+<!-- 分类 -->
+<div class="sidebar-card card-cats">
+  <div class="card-title"><span>📂 分类</span></div>
+  <ul class="taxonomy-list">
+    {{ range $name, $taxonomy := site.Taxonomies.categories }}
+    <li>
+      <a href="{{ $taxonomy.Page.RelPermalink }}">
+        <span class="taxonomy-name">{{ $name }}</span>
+        <span class="taxonomy-count">{{ len $taxonomy.Pages }}</span>
+      </a>
+    </li>
+    {{ end }}
+  </ul>
+</div>
+
+<!-- 标签 -->
+<div class="sidebar-card card-tags">
+  <div class="card-title"><span>🏷️ 标签</span></div>
+  <div class="tag-cloud">
+    {{ range $name, $taxonomy := site.Taxonomies.tags }}
+    <a href="{{ $taxonomy.Page.RelPermalink }}" class="tag-chip">
+      {{ $name }}
+    </a>
+    {{ end }}
+  </div>
+</div>
+
+<!-- 归档 -->
+<div class="sidebar-card card-archives">
+  <div class="card-title"><span>📁 归档</span></div>
+  <ul class="taxonomy-list">
+    {{ range .Site.RegularPages.GroupByDate "2006-01" }}
+    <li>
+      <a href="/archives/">
+        <span class="taxonomy-name">{{ .Key }}</span>
+        <span class="taxonomy-count">{{ len .Pages }}</span>
+      </a>
+    </li>
+    {{ end }}
+  </ul>
+</div>
+
+{{ end }}
+
+<script>
+(function() {
+  function update() {
+    var now = new Date();
+    var y = now.getFullYear();
+    var m = String(now.getMonth() + 1).padStart(2, '0');
+    var d = String(now.getDate()).padStart(2, '0');
+    var week = ['SUN','MON','TUE','WED','THU','FRI','SAT'][now.getDay()];
+    var dateEl = document.getElementById('clock-date');
+    var timeEl = document.getElementById('clock-time');
+    var ampmEl = document.getElementById('clock-ampm');
+    if (dateEl) dateEl.textContent = y + '-' + m + '-' + d + ' ' + week;
+    var h = String(now.getHours()).padStart(2, '0');
+    var mi = String(now.getMinutes()).padStart(2, '0');
+    var s = String(now.getSeconds()).padStart(2, '0');
+    if (timeEl) timeEl.textContent = h + ':' + mi + ':' + s;
+    if (ampmEl) ampmEl.textContent = now.getHours() < 12 ? 'A M' : 'P M';
+  }
+  update();
+  setInterval(update, 1000);
+})();
+
+function loadHitokoto() {
+  var el = document.getElementById('hitokoto-text');
+  var from = document.getElementById('hitokoto-from');
+  if (!el) return;
+  el.textContent = '加载中...';
+  fetch('https://v1.hitokoto.cn/')
+    .then(r => r.json())
+    .then(data => {
+      el.textContent = data.hitokoto;
+      if (from) from.textContent = '— ' + (data.from || '佚名');
+    })
+    .catch(() => { el.textContent = '加载失败'; });
+}
+loadHitokoto();
+</script>

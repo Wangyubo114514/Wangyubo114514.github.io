@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>生活 on WIN-VSCODE的小站</title>
+        <link>https://starter.stack.cai.im/categories/%E7%94%9F%E6%B4%BB/</link>
+        <description>Recent content in 生活 on WIN-VSCODE的小站</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Tue, 06 Oct 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://starter.stack.cai.im/categories/%E7%94%9F%E6%B4%BB/index.xml" rel="self" type="application/rss+xml" /><item>
+            <title>我的第一篇文章</title>
+            <link>https://starter.stack.cai.im/posts/first-article/</link>
+            <pubDate>Tue, 06 Oct 2026 00:00:00 +0000</pubDate>
+            <guid>https://starter.stack.cai.im/posts/first-article/</guid>
+            <description>&lt;h2 id=&#34;欢迎来到我的小站&#34;&gt;&lt;a href=&#34;#%e6%ac%a2%e8%bf%8e%e6%9d%a5%e5%88%b0%e6%88%91%e7%9a%84%e5%b0%8f%e7%ab%99&#34; class=&#34;header-anchor&#34;&gt;&lt;/a&gt;欢迎来到我的小站&#xA;&lt;/h2&gt;&lt;p&gt;其实创建这个博客的念头很偶然&lt;/p&gt;&#xA;&lt;p&gt;一天我闲着没事，在GitHub上弄了个项目，&lt;a class=&#34;link&#34; href=&#34;https://github.com/Wangyubo114514/winapt&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;就是这个&lt;/a&gt;，然后想着，一个东西分享出来，那不挺好的吗！（虽然GitHub本来就是用来分享的，但考虑到GitHub没那么多人知道）我就觉得搭个博客挺好的，能分享东西，还可以学习一些前端知识,&lt;span style=&#34;color:#666;&#34;&gt;（其实都是用AI的）&lt;/span&gt;&#xA;一举两得&lt;/p&gt;&#xA;&lt;p&gt;于是就有了你看到的这个网站&lt;/p&gt;&#xA;&lt;h3 id=&#34;关于我&#34;&gt;&lt;a href=&#34;#%e5%85%b3%e4%ba%8e%e6%88%91&#34; class=&#34;header-anchor&#34;&gt;&lt;/a&gt;关于我&#xA;&lt;/h3&gt;&lt;p&gt;我是 WIN-VSCODE（网名），一个 2015 年出生的小学生。喜欢折腾 Python，也喜欢鼓捣一些看起来&amp;quot;很酷但没什么用&amp;quot;的小东西。写代码基本靠 AI 帮忙，遇到不会的就问，慢慢也就摸出了一些门道&lt;/p&gt;&#xA;&lt;h3 id=&#34;关于网站&#34;&gt;&lt;a href=&#34;#%e5%85%b3%e4%ba%8e%e7%bd%91%e7%ab%99&#34; class=&#34;header-anchor&#34;&gt;&lt;/a&gt;关于网站&#xA;&lt;/h3&gt;&lt;p&gt;整个网站是用 Hugo 搭的，主题是 Stack，部署在 GitHub Pages 上，&lt;strong&gt;完全免费&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;h3 id=&#34;会写点啥&#34;&gt;&lt;a href=&#34;#%e4%bc%9a%e5%86%99%e7%82%b9%e5%95%a5&#34; class=&#34;header-anchor&#34;&gt;&lt;/a&gt;会写点啥&#xA;&lt;/h3&gt;&lt;p&gt;有一些关于编程的东西会写，生活类的也会写&lt;/p&gt;&#xA;&lt;p&gt;&lt;span style=&#34;color: #666; font-size: 12px;&#34;&gt;（然后不知道写啥了）&lt;/span&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;最后&#34;&gt;&lt;a href=&#34;#%e6%9c%80%e5%90%8e&#34; class=&#34;header-anchor&#34;&gt;&lt;/a&gt;最后&#xA;&lt;/h2&gt;&lt;p&gt;这个网站如果有什么bug，欢迎访问&lt;a class=&#34;link&#34; href=&#34;https://space.bilibili.com/3546631809010428&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;&#xA;    &gt;我的B站账户&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;如果你没有配置网络代理，一定要看&lt;a class=&#34;link&#34; href=&#34;&#34; &gt;这篇文章&lt;/a&gt;，这是访问Github和我的博客的基础!&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;也要记得关注我的B站账户，给我GitHub项目点个star！&lt;/p&gt;&#xA;</description>
+        </item></channel>
+</rss>

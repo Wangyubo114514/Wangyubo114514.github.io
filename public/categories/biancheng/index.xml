@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Bian&#39;cheng on WIN-VSCODE的小站</title>
+        <link>http://localhost:1313/categories/biancheng/</link>
+        <description>Recent content in Bian&#39;cheng on WIN-VSCODE的小站</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Mon, 05 Oct 2026 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/biancheng/index.xml" rel="self" type="application/rss+xml" /><item>
+            <title>我的第一篇文章</title>
+            <link>http://localhost:1313/posts/network-proxy/</link>
+            <pubDate>Mon, 05 Oct 2026 00:00:00 +0000</pubDate>
+            <guid>http://localhost:1313/posts/network-proxy/</guid>
+            <description></description>
+        </item></channel>
+</rss>

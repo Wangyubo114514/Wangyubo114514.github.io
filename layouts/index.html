@@ -1,0 +1,78 @@
+{{ define "body-class" }}home{{ end }}
+
+{{ define "main" }}
+
+<!-- ===== Hero 全屏头部 ===== -->
+<div class="hero-section">
+  <div class="hero-content">
+    <h1 class="hero-title">WIN-VSCODE的小站</h1>
+    <h2 class="hero-subtitle">
+      <span id="typewriter"></span><span class="cursor">|</span>
+    </h2>
+  </div>
+  <a href="#article-list" class="scroll-down" aria-label="向下滚动">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </a>
+</div>
+
+<!-- ===== 卡片列表 + 右侧小组件 ===== -->
+<div class="container main-container flex on-phone--column compact">
+  <main class="main">
+    <div id="article-list" class="article-list-container">
+      {{ $posts := where .Site.RegularPages "Section" "posts" }}
+      {{ range $posts }}
+      <article class="post-card">
+        {{ if .Params.cover }}
+        <div class="post-card-cover">
+          <img src="{{ .Params.cover | relURL }}" alt="{{ .Title }}">
+        </div>
+        {{ end }}
+        <div class="post-card-body">
+          <h2 class="post-card-title">
+            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+          </h2>
+          <div class="post-card-meta">
+            <span class="post-card-date">{{ .Date.Format "2006-01-02" }}</span>
+            {{ with .Params.categories }}
+              <span class="post-card-sep">·</span>
+              <span class="post-card-category">{{ index . 0 }}</span>
+            {{ end }}
+          </div>
+          <p class="post-card-summary">{{ .Summary | plainify | truncate 80 }}</p>
+        </div>
+      </article>
+      {{ end }}
+    </div>
+  </main>
+  <aside class="right-sidebar">
+    {{ partial "right-sidebar.html" . }}
+  </aside>
+</div>
+
+<!-- ===== 打字机 JS ===== -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const textArray = ["一个10后学生", "记录学习与生活", "让自己青春变得更加完美"];
+  let textIndex = 0, charIndex = 0, isDeleting = false;
+  const el = document.getElementById('typewriter');
+  function type() {
+    const cur = textArray[textIndex];
+    if (isDeleting) {
+      el.textContent = cur.substring(0, charIndex - 1);
+      charIndex--;
+    } else {
+      el.textContent = cur.substring(0, charIndex + 1);
+      charIndex++;
+    }
+    let speed = isDeleting ? 100 : 200;
+    if (!isDeleting && charIndex === cur.length) { speed = 1500; isDeleting = true; }
+    else if (isDeleting && charIndex === 0) { isDeleting = false; textIndex = (textIndex + 1) % textArray.length; speed = 500; }
+    setTimeout(type, speed);
+  }
+  type();
+});
+</script>
+
+{{ end }}

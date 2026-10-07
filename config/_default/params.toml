@@ -1,0 +1,72 @@
+# ============================================================
+# Hugo Stack 主题 - 参数配置（修正版）
+# 文件位置: config/_default/params.toml
+# ============================================================
+
+# ---------- 基础设置 ----------
+mainSections = ["posts"]
+featuredImageField = "image"
+rssFullContent = true
+favicon = "img/favicon.ico"
+customSCSS = ["scss/custom.scss"]
+
+# ---------- 页脚 ----------
+[footer]
+since = 2026                    # 你的建站年份
+customText = "Wangyubo114514"     # 页脚显示的文字
+
+# ---------- 日期格式 ----------
+[dateFormat]
+published = "2006-01-02"
+lastUpdated = "2006-01-02 15:04"
+
+# ---------- 侧边栏 ----------
+[sidebar]
+compact = false
+emoji = ""
+subtitle = "摸得浮生半日闲"
+avatar = "/img/avatar.png"
+
+# ---------- 文章设置 ----------
+[article]
+headingAnchor = true
+math = false
+toc = true
+readingTime = true
+
+[article.list]
+showTags = false
+
+[article.license]
+enabled = true
+default = "Licensed under CC BY-SA 4.0"
+
+[article.mermaid]
+look = "classic"
+lightTheme = "default"
+darkTheme = "dark"
+
+# ---------- 右侧小部件 ----------
+[widgets]
+homepage = []
+page = [
+  { type = "profile" },
+  { type = "toc" },
+]
+
+# ---------- 颜色方案 ----------
+[colorScheme]
+toggle = true
+default = "auto"
+
+# ---------- 评论系统 ----------
+[comments]
+enabled = false
+provider = "disqus"
+
+# ---------- 图片处理 ----------
+[imageProcessing.cover]
+enabled = true
+
+[imageProcessing.content]
+enabled = true

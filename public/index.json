@@ -1,0 +1,15 @@
+[{
+      "title": "我的第一篇文章",
+      "permalink": "/posts/first-article/",
+      "summary": "欢迎来到我的小站 其实创建这个博客的念头很偶然\n一天我闲着没事，在GitHub上弄了个项目，就是这个，然后想着，一个东西分享出来，那不挺好的吗！（虽然GitHub本来就是用来分享的，但考虑到GitHub没那么多人知道）我就觉得搭个博客挺好的 …",
+      "date": "2026-10-06",
+      "tags": ["随笔"],
+      "categories": ["生活"]
+    },{
+      "title": "让访问GitHub更流畅",
+      "permalink": "/posts/network-proxy/",
+      "summary": "比改 hosts 更省心：dev-sidecar 让 GitHub 真正“直连” 用 GitHub 最烦的，不是一直打不开，而是时好时坏。网页转圈，头像裂图，clone 半天没动静——这种“薛定谔的通”，很多时候真不是墙的问题，而是本地 …",
+      "date": "2026-10-06",
+      "tags": ["网络配置","代理"],
+      "categories": ["编程"]
+    }]

@@ -1,0 +1,53 @@
+{{ define "main" }}
+<div class="search-page">
+  <h1 class="search-page-title">🔍 搜索结果</h1>
+  <div id="search-query-display"></div>
+  <div id="search-results-page" class="search-results-page">
+    <div class="search-hint">正在加载...</div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    var params = new URLSearchParams(window.location.search);
+    var kw = (params.get('q') || '').trim();
+    var display = document.getElementById('search-query-display');
+    var box = document.getElementById('search-results-page');
+    
+    if (!kw) {
+      display.innerHTML = '';
+      box.innerHTML = '<div class="search-hint">请输入关键词搜索</div>';
+      return;
+    }
+    display.innerHTML = '<p class="search-keyword">关键词：<strong>' + kw + '</strong></p>';
+    
+    fetch('/index.json')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        var lower = kw.toLowerCase();
+        var hits = data.filter(function(item) {
+          return (item.title && item.title.toLowerCase().indexOf(lower) !== -1) ||
+                 (item.summary && item.summary.toLowerCase().indexOf(lower) !== -1) ||
+                 (item.tags && item.tags.join(' ').toLowerCase().indexOf(lower) !== -1);
+        });
+        if (hits.length === 0) {
+          box.innerHTML = '<div class="search-hint">没有找到匹配的文章</div>';
+          return;
+        }
+        var html = '<p class="search-count">共找到 ' + hits.length + ' 篇文章</p><ul class="search-list">';
+        hits.forEach(function(item) {
+          html += '<li class="search-item"><a href="' + item.permalink + '">' +
+                    '<div class="search-item-title">' + item.title + '</div>' +
+                    '<div class="search-item-summary">' + item.summary + '</div>' +
+                    '<div class="search-item-date">' + item.date + '</div>' +
+                  '</a></li>';
+        });
+        html += '</ul>';
+        box.innerHTML = html;
+      })
+      .catch(function() {
+        box.innerHTML = '<div class="search-hint">搜索索引加载失败</div>';
+      });
+  })();
+</script>
+{{ end }}

@@ -1,0 +1,24 @@
+baseURL = "https://Wangyubo114514.github.io/"
+locale = "zh-cn"
+title = "WIN-VSCODE的小站"
+theme = "hugo-theme-stack"
+defaultContentLanguage = "zh"
+customSCSS = ["scss/custom.scss"]
+publishDir = 'docs'
+hasCJKLanguage = true
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[pagination]
+  pagerSize = 10
+
+[services]
+  [services.rss]
+    limit = 20
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+

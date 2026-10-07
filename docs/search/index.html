@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="摸得浮生半日闲">
+<title>搜索</title>
+
+
+<link rel="canonical" href="https://starter.stack.cai.im/search/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap">
+
+
+<link rel="stylesheet" href="/scss/style.min.69baa55b6411bdf5170686561fe84c31e9d5e7da132c5b884a9a915328c70828.css"><meta property='og:title' content="搜索">
+<meta property='og:description' content="摸得浮生半日闲">
+<meta property='og:url' content='https://starter.stack.cai.im/search/'>
+<meta property='og:site_name' content='WIN-VSCODE的小站'>
+<meta property='og:type' content='website'><meta property='og:updated_time' content=' 2026-10-06T00:00:00&#43;00:00 '/>
+<meta name="twitter:title" content="搜索">
+<meta name="twitter:description" content="摸得浮生半日闲"><link rel="alternate" type="application/rss&#43;xml" href="https://starter.stack.cai.im/search/index.xml">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+    </head>
+    <body class="">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+
+        <header class="top-navbar">
+            <div class="top-navbar-inner">
+                <div class="navbar-left">
+                  <a href="https://starter.stack.cai.im/" class="navbar-brand">WIN-VSCODE的小站</a>
+                </div>
+
+                <nav class="navbar-menu">
+                    
+                      
+                        <a href="/" class="navbar-link">🏠 首页</a>
+                      
+                    
+                      
+                        <div class="navbar-dropdown">
+                          <a href="/categories/" class="navbar-link">📂 分类 ▾</a>
+                          <div class="dropdown-menu">
+                            
+                              <a href="/categories/%E7%94%9F%E6%B4%BB/" class="dropdown-item">📂 生活</a>
+                            
+                              <a href="/categories/%E7%BC%96%E7%A8%8B/" class="dropdown-item">📂 编程</a>
+                            
+                          </div>
+                        </div>
+                      
+                    
+                      
+                        <div class="navbar-dropdown">
+                          <a href="/tags/" class="navbar-link">🏷️ 标签 ▾</a>
+                          <div class="dropdown-menu">
+                            
+                              <a href="/tags/%E4%BB%A3%E7%90%86/" class="dropdown-item">🏷️ 代理</a>
+                            
+                              <a href="/tags/%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/" class="dropdown-item">🏷️ 网络配置</a>
+                            
+                              <a href="/tags/%E9%9A%8F%E7%AC%94/" class="dropdown-item">🏷️ 随笔</a>
+                            
+                          </div>
+                        </div>
+                      
+                    
+                      
+                        <a href="/archives/" class="navbar-link">📁 归档</a>
+                      
+                    
+                      
+                        <a href="/%E5%85%B3%E4%BA%8E%E6%88%91/" class="navbar-link">👤 关于我</a>
+                      
+                    
+                    <form class="navbar-search" onsubmit="event.preventDefault(); var q=this.querySelector('input').value.trim(); if(q) window.open('/search/?q=' + encodeURIComponent(q), '_blank');">
+                      <input type="text" placeholder="搜索..." autocomplete="off">
+                    </form>
+                </nav>
+            </div>
+        </header>
+
+        
+          <div class="container main-container flex on-phone--column compact">
+              <main class="main">
+<div class="search-page">
+  <h1 class="search-page-title">🔍 搜索结果</h1>
+  <div id="search-query-display"></div>
+  <div id="search-results-page" class="search-results-page">
+    <div class="search-hint">正在加载...</div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    var params = new URLSearchParams(window.location.search);
+    var kw = (params.get('q') || '').trim();
+    var display = document.getElementById('search-query-display');
+    var box = document.getElementById('search-results-page');
+    
+    if (!kw) {
+      display.innerHTML = '';
+      box.innerHTML = '<div class="search-hint">请输入关键词搜索</div>';
+      return;
+    }
+    display.innerHTML = '<p class="search-keyword">关键词：<strong>' + kw + '</strong></p>';
+    
+    fetch('/index.json')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        var lower = kw.toLowerCase();
+        var hits = data.filter(function(item) {
+          return (item.title && item.title.toLowerCase().indexOf(lower) !== -1) ||
+                 (item.summary && item.summary.toLowerCase().indexOf(lower) !== -1) ||
+                 (item.tags && item.tags.join(' ').toLowerCase().indexOf(lower) !== -1);
+        });
+        if (hits.length === 0) {
+          box.innerHTML = '<div class="search-hint">没有找到匹配的文章</div>';
+          return;
+        }
+        var html = '<p class="search-count">共找到 ' + hits.length + ' 篇文章</p><ul class="search-list">';
+        hits.forEach(function(item) {
+          html += '<li class="search-item"><a href="' + item.permalink + '">' +
+                    '<div class="search-item-title">' + item.title + '</div>' +
+                    '<div class="search-item-summary">' + item.summary + '</div>' +
+                    '<div class="search-item-date">' + item.date + '</div>' +
+                  '</a></li>';
+        });
+        html += '</ul>';
+        box.innerHTML = html;
+      })
+      .catch(function() {
+        box.innerHTML = '<div class="search-hint">搜索索引加载失败</div>';
+      });
+  })();
+</script>
+
+              </main>
+              
+              <aside class="right-sidebar">
+                  
+<div class="sidebar-card card-info">
+  <div class="card-info-avatar">
+    <img src="/img/avatar.png" alt="avatar">
+  </div>
+  <div class="card-info-name">WIN-VSCODE</div>
+  <div class="card-info-desc">2015年小学生，用Python看世界</div>
+  <div class="card-info-stats">
+    <a href="/archives/">
+      <div class="stat-label">文章</div>
+      <div class="stat-num">2</div>
+    </a>
+    <a href="/tags/">
+      <div class="stat-label">标签</div>
+      <div class="stat-num">3</div>
+    </a>
+    <a href="/categories/">
+      <div class="stat-label">分类</div>
+      <div class="stat-num">2</div>
+    </a>
+  </div>
+  <a class="card-info-follow" href="https://github.com/Wangyubo114514" target="_blank">
+    <i class="fa-brands fa-github"></i> 关注我
+  </a>
+  <div class="card-info-social">
+    <a href="https://github.com/Wangyubo114514" target="_blank" title="GitHub">🐱</a>
+    <a href="https://space.bilibili.com/3546631809010428" target="_blank" title="Bilibili">📺</a>
+  </div>
+</div>
+
+
+<div class="sidebar-card card-announcement">
+  <div class="card-title"><span>📢 公告</span></div>
+  <div class="card-content">This is my Blog</div>
+</div>
+
+
+<div class="sidebar-card card-recent">
+  <div class="card-title"><span>🕐 最新文章</span></div>
+  <ul class="recent-list">
+    
+    <li><a href="/posts/first-article/">我的第一篇文章</a></li>
+    
+    <li><a href="/posts/network-proxy/">让访问GitHub更流畅</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="sidebar-card card-clock">
+  <div class="clock-row">
+    <span id="clock-date">----</span>
+    <span id="clock-weather">🌤 -- ℃</span>
+  </div>
+  <div class="clock-time" id="clock-time">--:--:--</div>
+  <div class="clock-row">
+    <span>📍 安徽·黄山</span>
+    <span id="clock-ampm">--</span>
+  </div>
+</div>
+
+
+<div class="sidebar-card card-hitokoto">
+  <div class="hitokoto-title">❝ 每日一言</div>
+  <div class="hitokoto-text" id="hitokoto-text">加载中...</div>
+  <div class="hitokoto-footer">
+    <span id="hitokoto-from">— </span>
+    <span class="hitokoto-refresh" onclick="loadHitokoto()">🔄 换一句</span>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<div class="sidebar-card card-cats">
+  <div class="card-title"><span>📂 分类</span></div>
+  <ul class="taxonomy-list">
+    
+    <li>
+      <a href="/categories/%E7%94%9F%E6%B4%BB/">
+        <span class="taxonomy-name">生活</span>
+        <span class="taxonomy-count">1</span>
+      </a>
+    </li>
+    
+    <li>
+      <a href="/categories/%E7%BC%96%E7%A8%8B/">
+        <span class="taxonomy-name">编程</span>
+        <span class="taxonomy-count">1</span>
+      </a>
+    </li>
+    
+  </ul>
+</div>
+
+
+<div class="sidebar-card card-tags">
+  <div class="card-title"><span>🏷️ 标签</span></div>
+  <div class="tag-cloud">
+    
+    <a href="/tags/%E4%BB%A3%E7%90%86/" class="tag-chip">
+      代理
+    </a>
+    
+    <a href="/tags/%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/" class="tag-chip">
+      网络配置
+    </a>
+    
+    <a href="/tags/%E9%9A%8F%E7%AC%94/" class="tag-chip">
+      随笔
+    </a>
+    
+  </div>
+</div>
+
+
+<div class="sidebar-card card-archives">
+  <div class="card-title"><span>📁 归档</span></div>
+  <ul class="taxonomy-list">
+    
+    <li>
+      <a href="/archives/">
+        <span class="taxonomy-name">2026-10</span>
+        <span class="taxonomy-count">3</span>
+      </a>
+    </li>
+    
+  </ul>
+</div>
+
+
+
+<script>
+(function() {
+  function update() {
+    var now = new Date();
+    var y = now.getFullYear();
+    var m = String(now.getMonth() + 1).padStart(2, '0');
+    var d = String(now.getDate()).padStart(2, '0');
+    var week = ['SUN','MON','TUE','WED','THU','FRI','SAT'][now.getDay()];
+    var dateEl = document.getElementById('clock-date');
+    var timeEl = document.getElementById('clock-time');
+    var ampmEl = document.getElementById('clock-ampm');
+    if (dateEl) dateEl.textContent = y + '-' + m + '-' + d + ' ' + week;
+    var h = String(now.getHours()).padStart(2, '0');
+    var mi = String(now.getMinutes()).padStart(2, '0');
+    var s = String(now.getSeconds()).padStart(2, '0');
+    if (timeEl) timeEl.textContent = h + ':' + mi + ':' + s;
+    if (ampmEl) ampmEl.textContent = now.getHours() < 12 ? 'A M' : 'P M';
+  }
+  update();
+  setInterval(update, 1000);
+})();
+
+function loadHitokoto() {
+  var el = document.getElementById('hitokoto-text');
+  var from = document.getElementById('hitokoto-from');
+  if (!el) return;
+  el.textContent = '加载中...';
+  fetch('https://v1.hitokoto.cn/')
+    .then(r => r.json())
+    .then(data => {
+      el.textContent = data.hitokoto;
+      if (from) from.textContent = '— ' + (data.from || '佚名');
+    })
+    .catch(() => { el.textContent = '加载失败'; });
+}
+loadHitokoto();
+</script>
+              </aside>
+              
+          </div>
+        
+
+        
+<script type="text/javascript" src="/ts/main.1ff1e5fdc4e178ed422e50aa407526dc552f26342d729343fded19416194382c.js" defer></script>
+
+
+
+        
+        <script>
+          (function() {
+            var navbar = document.querySelector('.top-navbar');
+            if (!navbar) return;
+            var lastScrollY = window.scrollY;
+            function handleScroll() {
+              var currentScrollY = window.scrollY;
+              if (currentScrollY > 60 && currentScrollY > lastScrollY) {
+                navbar.classList.add('hidden');
+              } else {
+                navbar.classList.remove('hidden');
+              }
+              lastScrollY = currentScrollY;
+            }
+            window.addEventListener('scroll', handleScroll, { passive: true });
+          })();
+        </script>
+
+        
+        <script>
+          (function() {
+            var palette = [
+              '#ac4142','#7e8e50','#5e7ec9','#4caf50','#9c27b0',
+              '#6c6c8c','#d4a017','#5c6bc0','#c2185b','#2e8b57',
+              '#7a7c50','#6d4c41','#e91e63'
+            ];
+            var links = document.querySelectorAll(
+              '.main a[href^="/tags/"], .main a[href^="/categories/"]'
+            );
+            links.forEach(function(el, i) {
+              if (el.classList.contains('dropdown-item') ||
+                  el.classList.contains('navbar-link')) return;
+              el.style.setProperty('background', palette[i % palette.length], 'important');
+              el.style.setProperty('color', '#fff', 'important');
+            });
+          })();
+        </script>
+
+        
+        <script>
+          (function() {
+            document.querySelectorAll('h2.section-title').forEach(function(el) {
+              if (el.textContent.trim().toLowerCase() === 'related content') {
+                var parent = el.closest('section') || el.parentElement;
+                if (parent) parent.style.display = 'none';
+              }
+            });
+          })();
+        </script>
+    </body>
+</html>
